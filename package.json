@@ -1,0 +1,87 @@
+{
+    "name": "surveys",
+    "version": "0.1.4",
+    "private": true,
+    "scripts": {
+        "cypress:open": "cypress open --e2e --browser chrome",
+        "cy:run": "cypress run --browser chrome --headless",
+        "cy:parallel": "cypress-parallel -s cy:run -t 2 -d cypress/e2e -m false",
+        "smoke": "npx cypress run cypress/e2e/ClientsFeatures",
+        "cypress": "npx cypress run",
+        "test:e2e": "cypress run",
+        "headTest": "npm run test -- --headed",
+        "chromeTest": "npm run test -- --browser chrome",
+        "prepare": "husky install",
+        "delete:reportFolder": "rm -rf mochawesome-report/",
+        "test:cli": "npm run delete:reportFolder && cypress run",
+        "merge:reports": "mochawesome-merge reports/*.json > cypress-combined-report.html",
+        "create:html:report": "npm run merge:reports && marge --reportDir TestReport cypress-combined-report.html"
+    },
+    "cypress-cucumber-preprocessor": {
+        "nonGlobalStepDefinitions": true,
+        "cucumberJson": {
+            "generate": true,
+            "outputFolder": "cypress/cucumber-json",
+            "filePrefix": "",
+            "fileSuffix": ".cucumber",
+            "filterSpecs": true,
+            "omitFiltered": true
+        },
+        "stepDefinitions": [
+            "cypress/e2e/[filepath]/*.{js,ts}",
+            "cypress/e2e/common/*.{js,ts}"
+        ]
+    },
+    "dependencies": {
+        "axios": "^1.3.5",
+        "core-js": "^2.6.5",
+        "cypress-cucumber-preprocessor": "^4.3.1",
+        "cypress-downloadfile": "^1.2.2",
+        "cypress-tags": "^1.1.2",
+        "focus-visible": "^5.0.2",
+        "mysql": "^2.18.1",
+        "mysql2": "^2.3.3"
+    },
+    "devDependencies": {
+        "@badeball/cypress-cucumber-preprocessor": "^13.0.3",
+        "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+        "@cypress/webpack-preprocessor": "^5.17.0",
+        "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+        "@testing-library/cypress": "^5.0.2",
+        "@testing-library/jest-dom": "^4.2.3",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-eslint": "^10.0.1",
+        "babel-jest": "^29.5.0",
+        "cypress": "^10.11.0",
+        "cypress-mochawesome-reporter": "^3.3.0",
+        "cypress-multi-reporters": "^1.6.3",
+        "cypress-parallel": "^0.12.0",
+        "cypress-select-tests": "^1.7.1",
+        "esbuild": "^0.17.16",
+        "eslint": "^5.16.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "husky": "^7.0.4",
+        "lint-staged": "^13.2.1",
+        "mocha": "^10.2.0",
+        "mochawesome": "^7.1.3",
+        "mochawesome-merge": "^4.3.0",
+        "mochawesome-report-generator": "^6.2.0",
+        "multiple-cucumber-html-reporter": "^3.3.0",
+        "prettier": "1.19.1"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js}": [
+            "git add"
+        ]
+    },
+    "prettier": {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "printWidth": 120,
+        "tabWidth": 4
+    }
+}
