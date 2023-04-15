@@ -1,22 +1,11 @@
-const { defineConfig } = require('cypress')
-const environment = require('./cypress.env.json')
+const cucumber = require('cypress-cucumber-preprocessor').default
+const { defineConfig } = require("cypress");
 
-module.exports = defineConfig({ 
-  //reporter: 'cypress-mochawesome-reporter',
-  defaultCommandTimeout: 8000,
-  pageLoadTimeout: 4000,
-  video: false,
-  env: JSON.parse(JSON.stringify(environment)),
-  retries: {  
-    runMode: 1,
-  },
-  projectId: '12345',
+module.exports = defineConfig({
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
+      on('file:preprocessor', cucumber())
     },
-    specPattern: ["cypress/e2e/RunFirst.cy.js","cypress/e2e/**/*.feature"],
-  }
-})
+    specPattern: "cypress/e2e/*.feature",
+  },
+});
