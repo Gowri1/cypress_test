@@ -1,5 +1,10 @@
-Feature: Mobileview workflow
+Feature: Mobile view workflow
+
+Background: set viewmode
+  Given Load payload version "test-url-two"
 
 Scenario: mobile page
-  Given Set view mode to "iphone-4"
-   When Load payload version "test-url-two"
+  When Set view mode to mobile
+
+Scenario: validate heading
+  Then Validate the heading
